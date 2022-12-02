@@ -1,7 +1,7 @@
 use std::fs;
 
 fn main() {
-    let input = fs::read_to_string("test.txt").unwrap();
+    let input = fs::read_to_string("input.txt").unwrap();
     let score_1 = input
         .lines()
         .map(|it| {
@@ -23,13 +23,13 @@ fn main() {
         .map(|it| {
             let vals = it.chars().map(|it| it as usize).collect::<Vec<_>>();
             let strategy = vals[2] - 88;
-            let oponent_choice = vals[0] - 64;
+            let oponent_choice = vals[0] - 65;
             if strategy == 0 {
-                (oponent_choice + 1) % 3 + 1
+                (oponent_choice + 2) % 3 + 1
             } else if strategy == 1 {
-                3 + oponent_choice
+                3 + oponent_choice + 1
             } else {
-                (oponent_choice + 1) % 3 + 6
+                ((oponent_choice + 1) % 3) + 1 + 6
             }
         })
         .sum::<usize>();
