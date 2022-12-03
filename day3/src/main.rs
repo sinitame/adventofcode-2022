@@ -10,7 +10,7 @@ fn main() {
         })
         .collect::<Vec<_>>();
 
-    let sum_of_priorities = items
+    let sum_of_priorities_1 = items
         .iter()
         .map(|rucksack| {
             let rucksack_len = rucksack.len();
@@ -21,6 +21,17 @@ fn main() {
                 .unwrap() as usize
         })
         .sum::<usize>();
+    println!("{}", sum_of_priorities_1);
 
-    dbg!(&sum_of_priorities);
+    let sum_of_priorities_2 = items
+        .chunks(3)
+        .map(|rucksack_chunck| {
+            *rucksack_chunck[0]
+                .iter()
+                .filter(|it| rucksack_chunck[1].contains(it))
+                .find(|it| rucksack_chunck[2].contains(it))
+                .unwrap() as usize
+        })
+        .sum::<usize>();
+    println!("{}", sum_of_priorities_2);
 }
