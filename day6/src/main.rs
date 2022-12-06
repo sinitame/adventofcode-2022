@@ -7,16 +7,20 @@ fn main() {
             .windows(msg_len)
             .enumerate()
             .find(|(_idx, it)| {
+                let mut set = vec![it[0]];
                 let set_len = it
                     .iter()
                     .skip(1)
-                    .fold(vec![it[0]], |mut set, e| {
+                    .map_while(|e| {
                         if !set.contains(e) {
                             set.push(*e);
+                            Some(set.len())
+                        } else {
+                            None
                         }
-                        set
                     })
-                    .len();
+                    .last()
+                    .unwrap_or(0);
                 set_len == msg_len
             })
             .map(|(idx, _)| msg_len + idx)
