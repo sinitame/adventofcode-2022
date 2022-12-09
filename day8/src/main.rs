@@ -35,15 +35,17 @@ fn main() {
     for i in 0..grid.len() {
         for j in 0..grid[0].len() {
             let (score_to_top, _) =
-                (0..(i+1)).rev().fold((0, true), |(mut count, mut should_continue), id| {
-                    if ((grid[id][j] <= grid[i][j]) || id == 0) & should_continue {
-                        count += 1;
-                        if grid[id][j] == grid[i][j] {
-                            should_continue = false;
+                (0..i)
+                    .rev()
+                    .fold((0, true), |(mut count, mut should_continue), id| {
+                        if ((grid[id][j] <= grid[i][j]) || id == 0) & should_continue {
+                            count += 1;
+                            if grid[id][j] == grid[i][j] {
+                                should_continue = false;
+                            }
                         }
-                    }
-                    (count, should_continue)
-                });
+                        (count, should_continue)
+                    });
             let (score_to_down, _) =
                 ((i + 1)..grid.len()).fold((0, true), |(mut count, mut should_continue), id| {
                     if ((grid[id][j] <= grid[i][j]) || id == grid.len() - 1) & should_continue {
@@ -55,15 +57,17 @@ fn main() {
                     (count, should_continue)
                 });
             let (score_to_left, _) =
-                (0..(j+1)).rev().fold((0, true), |(mut count, mut should_continue), id| {
-                    if ((grid[i][id] <= grid[i][j]) || id == 0) & should_continue {
-                        count += 1;
-                        if grid[i][id] == grid[i][j] {
-                            should_continue = false;
+                (0..j)
+                    .rev()
+                    .fold((0, true), |(mut count, mut should_continue), id| {
+                        if ((grid[i][id] <= grid[i][j]) || id == 0) & should_continue {
+                            count += 1;
+                            if grid[i][id] == grid[i][j] {
+                                should_continue = false;
+                            }
                         }
-                    }
-                    (count, should_continue)
-                });
+                        (count, should_continue)
+                    });
             let (score_to_right, _) =
                 ((j + 1)..grid[0].len()).fold((0, true), |(mut count, mut should_continue), id| {
                     if ((grid[i][id] <= grid[i][j]) || id == grid[0].len() - 1) & should_continue {
